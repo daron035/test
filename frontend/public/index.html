@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/fonts/segoeui.css" />
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://static.yoomoney.ru/checkout-js/v1/checkout.js"></script>
+    <script type="text/javascript">
+      async function test(number, cvc, month, year) {
+        const checkout = new YooMoneyCheckout(983923);
+        let response;
+        await checkout
+          .tokenize({
+            number: number,
+            cvc: cvc,
+            month: month,
+            year: year,
+          })
+          .then((res) => {
+            if (res.status === "success") {
+              const { paymentToken } = res.data.response;
+              response = paymentToken;
+            } else if (res.status === "error") {
+              response = res;
+            }
+          });
+        return response;
+      }
+    </script>
+    <!-- <script type="text/javascript"> -->
+    <!--   async function tokenizeCard(number, cvc, month, year) { -->
+    <!--     const checkout = new YooMoneyCheckout(983923); -->
+    <!--     const res = await checkout.tokenize({ number, cvc, month, year }); -->
+    <!--     if (res.status === "success") { -->
+    <!--       return res.data.response.paymentToken; -->
+    <!--     } else { -->
+    <!--       return res; -->
+    <!--     } -->
+    <!--   } -->
+    <!-- </script> -->
+  </body>
+</html>
